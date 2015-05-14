@@ -11,8 +11,8 @@
 
 [PyCon 2015](http://www.analyticsvidhya.com/blog/2015/04/pycon-montreal-2015-data-science-talks/)
 
-##Package Installation
-
+##Dependent Package Installation
+```
 sudo apt-get install python3-setuptools
 sudo apt-get upgrade gcc
 sudo apt-get install python3.4-dev
@@ -32,3 +32,4 @@ sudo pip3 install pydot
 git clone https://github.com/erocarrera/pydot.git
 cd pydot/
 python3 setup.py install
+```
