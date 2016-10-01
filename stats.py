@@ -31,7 +31,7 @@ if __name__ == "__main__":
     
     import matplotlib.pyplot as plt
     
-    chal=[[0.9991, 22],#MIT-BIH QRS Detection
+    chal=[[0.9991, 22],#MIT-BIH 
           [0.9262,13], #2001
           [0.79, 10],#2002
           [0.82, 10],#2002
