@@ -24,6 +24,10 @@ xtrain = pd.read_csv(data_dir+ 'train.csv')
 id_train = xtrain['id']
 time_train = xtrain['timestamp']
 ytrain = xtrain['price_doc']
+
+z=xtrain.corr(method='pearson')
+print z
+
 xtrain.drop(['id', 'timestamp', 'price_doc'], axis = 1, inplace = True)
 xtrain.fillna(-1, inplace = True)
 
@@ -47,8 +51,6 @@ for c in df_obj:
     
 xdat = pd.concat([df_numeric, df_obj], axis=1)
 y = xdat['istrain']; xdat.drop('istrain', axis = 1, inplace = True)
-
-
 skf = StratifiedKFold(n_splits = 5, shuffle = True, random_state = 44)
 xgb_params = {'learning_rate': 0.05, 'max_depth': 4,'subsample': 0.9,
         'colsample_bytree': 0.9,'objective': 'binary:logistic',
@@ -57,9 +59,14 @@ xgb_params = {'learning_rate': 0.05, 'max_depth': 4,'subsample': 0.9,
         }
 
 clf = xgb.XGBClassifier(**xgb_params)#, seed = 10)
+feat_ind=2
 
 for train_index, test_index in skf.split(xdat, y):
         x0, x1 = xdat.iloc[train_index], xdat.iloc[test_index]
+        x0=x0.ix[:,:feat_ind]
+        x1=x1.ix[:,:feat_ind]
+        print list(x0)
+        print(x0.shape)
         y0, y1 = y.iloc[train_index], y.iloc[test_index]        
         clf.fit(x0, y0, eval_set=[(x1, y1)],
                eval_metric='logloss', verbose=False,early_stopping_rounds=10)
