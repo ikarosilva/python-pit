@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 def main():
     if sys.stdin.isatty():
         return 0
-    regex = re.compile('time=(\d+.\d+)')
+    #regex = re.compile('time=(\d+.\d+)')
+    regex = re.compile('(\d+.\d+)')
     data = []
     fig = plt.figure()
 
@@ -26,7 +27,7 @@ def main():
         #conversion: 64 bytes from 127.0.0.1: icmp_seq=0 ttl=45 time=100.873 ms --> 100.873
         match = regex.findall(line)
         number = 0.
-
+        
         if len(match) > 1:
             raise ValueError()
         if len(match) == 1:
@@ -34,6 +35,7 @@ def main():
             #except ValueError as e:
                 #print e
         #add number to array, plot the data
+        print "line =%s "%number
         data.append(number)
         l1.set_xdata(range(len(data)))
         l1.set_ydata(data)
