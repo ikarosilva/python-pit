@@ -29,9 +29,7 @@ import re
 from nltk.corpus import stopwords
 
 #Redundant words
-ART=['Figure','Fig','Table','et','al','To','The']
-
-
+ART=['Figure','Fig','Table','et','al','To','The','These']
 def parse_data(text):
     stop=set(stopwords.words('english'))
     pattern = re.compile('[^a-zA-Z\d\s:]', re.UNICODE)
@@ -135,7 +133,7 @@ for i in range(8):
 
 batch_size = 128
 embedding_size = 128  # Dimension of the embedding vector.
-skip_window = 1       # How many words to consider left and right.
+skip_window = 4       # How many words to consider left and right.
 num_skips = 2         # How many times to reuse an input to generate a label.
 
 # We pick a random validation set to sample nearest neighbors. Here we limit the
@@ -195,7 +193,7 @@ with graph.as_default():
   init = tf.global_variables_initializer()
 
 # Step 5: Begin training.
-num_steps = 1000001
+num_steps = 200001
 
 with tf.Session(graph=graph) as session:
   # We must initialize all variables before we use them.
@@ -252,17 +250,13 @@ def plot_with_labels(low_dim_embs, labels, filename='tsne.png'):
 
   plt.savefig(filename)
 
-try:
-  # pylint: disable=g-import-not-at-top
-  from sklearn.manifold import TSNE
-  import matplotlib.pyplot as plt
+from sklearn.manifold import TSNE
+import matplotlib.pyplot as plt
 
-  tsne = TSNE(perplexity=30, n_components=2, init='pca', n_iter=5000)
-  plot_only = 500
-  low_dim_embs = tsne.fit_transform(final_embeddings[:plot_only, :])
-  labels = [reverse_dictionary[i] for i in xrange(plot_only)]
-  plot_with_labels(low_dim_embs, labels)
-
-except ImportError:
-  print('Please install sklearn, matplotlib, and scipy to show embeddings.')
+tsne = TSNE(perplexity=30, n_components=2, init='pca', n_iter=5000)
+plot_only = 500
+low_dim_embs = tsne.fit_transform(final_embeddings[:plot_only, :])
+labels = [reverse_dictionary[i] for i in xrange(plot_only)]
+plot_with_labels(low_dim_embs, labels)
+plt.show()
   
