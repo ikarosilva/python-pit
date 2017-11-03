@@ -6,13 +6,18 @@ Created on Nov 2, 2017
 import gym
 from gym import envs
 
+
+def basic_policy(obs):
+    return 0 if obs[2]<0 else 1
+
 def example():
     print(len(envs.registry.all()))
     env = gym.make('CartPole-v0')
-    env.reset()
+    obs=env.reset()
     for _ in range(1000):
+        a=basic_policy(obs)
         env.render()
-        env.step(env.action_space.sample()) # take a random action
+        obs,rw,dn,info=env.step(a) # take a random action
         
         
 example()
