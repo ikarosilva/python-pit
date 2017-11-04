@@ -134,7 +134,7 @@ def main(_):
   accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
   from time import time
   
-  with tf.Session() as sess:
+  with tf.Session(config=tf.ConfigProto(log_device_placement=True)) as sess:
     start=time()
     sess.run(tf.global_variables_initializer())
     for i in range(20000):
