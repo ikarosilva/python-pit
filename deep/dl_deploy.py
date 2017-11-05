@@ -25,11 +25,12 @@ def deploy(env):
         n_inputs=4
         #deploy0(env)
         obs = env.reset()
-        for _ in range(300000):
+        for iteration in range(600000):
             action_val= sess.run(action,feed_dict={X:obs.reshape(1,n_inputs)})
             env.render()
             obs,_,done,_=env.step(action_val[0][0])
             if done:
+                print("Done with simulation step:%s"%(iteration))
                 break
    
 def deploy0(env):
