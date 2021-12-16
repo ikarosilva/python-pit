@@ -8,4 +8,4 @@ c = tf.matmul(a, b)
 with tf.Session(config=tf.ConfigProto(log_device_placement=True,device_count = {'GPU': 0})) as sess:
     print (sess.run(c))
 
-print device_lib.list_local_devices()
+print device_lib.list_local_devices() 
